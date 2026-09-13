@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brian — Builder & Student</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14201F;
+    --bg-raised: #1B2A28;
+    --ink: #EDEFE9;
+    --ink-dim: #A9B4AC;
+    --ink-faint: #6E7972;
+    --accent: #E3A857;
+    --accent-dim: #8C6B3B;
+    --line: #2B3B38;
+    --max-w: 720px;
+    --side-pad: clamp(24px, 6vw, 64px);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  h1, h2, h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  a { color: inherit; }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px var(--side-pad);
+    background: rgba(20, 32, 31, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  nav .mark {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    text-decoration: none;
+    font-size: 0.92rem;
+    color: var(--ink-dim);
+    transition: color 0.15s ease;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  @media (max-width: 560px) {
+    nav ul { gap: 16px; }
+    nav a { font-size: 0.82rem; }
+  }
+
+  section {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 96px var(--side-pad) 0;
+  }
+
+  section:last-of-type { padding-bottom: 96px; }
+
+  /* HERO */
+  .hero {
+    padding-top: 88px;
+    padding-bottom: 40px;
+  }
+
+  .hero .kicker {
+    color: var(--accent);
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.1rem, 5.5vw, 3.2rem);
+    line-height: 1.12;
+    max-width: 11ch;
+  }
+
+  .hero .role {
+    margin-top: 22px;
+    color: var(--ink-dim);
+    font-size: 1.1rem;
+    max-width: 46ch;
+  }
+
+  .hero .role strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* SECTION HEADS */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 14px;
+    margin-bottom: 40px;
+  }
+
+  .section-head h2 { font-size: 1.5rem; }
+
+  .section-head .count {
+    color: var(--ink-faint);
+    font-size: 0.88rem;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ABOUT */
+  .about p { color: var(--ink-dim); max-width: 62ch; }
+  .about p + p { margin-top: 16px; }
+
+  /* PROJECTS */
+  .project {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .project:first-of-type { padding-top: 0; }
+  .project:last-of-type { border-bottom: none; }
+
+  .project.featured {
+    background: var(--bg-raised);
+    margin: 0 calc(var(--side-pad) * -1);
+    padding: 40px var(--side-pad);
+    border-bottom: none;
+    border-radius: 2px;
+  }
+
+  .project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .project h3 {
+    font-size: 1.2rem;
+  }
+
+  .project .tag {
+    color: var(--accent);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    padding-top: 4px;
+  }
+
+  .project p {
+    color: var(--ink-dim);
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  .project .stack {
+    margin-top: 6px;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+  }
+
+  @media (max-width: 560px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+
+  .skill-group h3 {
+    font-size: 0.95rem;
+    color: var(--ink-faint);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    text-transform: none;
+    margin-bottom: 10px;
+  }
+
+  .skill-group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: var(--ink);
+    font-size: 1rem;
+  }
+
+  .skill-group li {
+    padding: 5px 0;
+  }
+
+  /* CONTACT */
+  .contact p {
+    color: var(--ink-dim);
+    max-width: 50ch;
+    margin-bottom: 28px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact-links a {
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.15rem;
+    color: var(--ink);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .contact-links a:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+
+  .contact-links span.arrow {
+    color: var(--ink-faint);
+  }
+
+  footer {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 40px var(--side-pad) 60px;
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="mark">Brian</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="kicker">Nairobi, Kenya</div>
+  <h1>Brian builds things that turn data into decisions.</h1>
+  <p class="role">University student and independent builder, currently developing <strong>a personal stock analysis system</strong> — combining market data, scoring logic, and sector-specific rules into one tool.</p>
+</section>
+
+<section id="about" class="about">
+  <div class="section-head">
+    <h2>About</h2>
+  </div>
+  <p>I'm a student based in Nairobi, currently splitting time between coursework and independent projects. I'm most interested in the space where data meets judgment — systems that don't just display numbers, but help you decide what to do with them.</p>
+  <p>Outside of that, I spend time thinking about how habits, incentives, and attention actually work — the kind of curiosity that shows up in side projects as often as it does in conversation.</p>
+</section>
+
+<section id="work">
+  <div class="section-head">
+    <h2>Work</h2>
+    <span class="count">01</span>
+  </div>
+
+  <div class="project featured">
+    <div class="project-top">
+      <h3>Personal Stock Analysis System</h3>
+      <span class="tag">In progress</span>
+    </div>
+    <p>A self-built tool for evaluating stocks — pulling data from multiple APIs, applying a custom scoring framework, and adjusting logic by sector. Built to cut through noise and support faster, more consistent investing decisions.</p>
+    <div class="stack">Market data APIs · Scoring frameworks · Sector-specific rules</div>
+  </div>
+
+  <div class="project">
+    <div class="project-top">
+      <h3>Project Two</h3>
+      <span class="tag">Add details</span>
+    </div>
+    <p>Swap this in for your next project — a short description of what it does and why you built it.</p>
+    <div class="stack">Tech stack goes here</div>
+  </div>
+
+  <div class="project">
+    <div class="project-top">
+      <h3>Project Three</h3>
+      <span class="tag">Add details</span>
+    </div>
+    <p>Another slot for coursework, a hackathon build, or anything else worth showing.</p>
+    <div class="stack">Tech stack goes here</div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head">
+    <h2>Skills</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <h3>Currently working with</h3>
+      <ul>
+        <li>Data APIs & integration</li>
+        <li>Database design (MySQL, cloud hosting)</li>
+        <li>Scoring / rules-based systems</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h3>Learning & exploring</h3>
+      <ul>
+        <li>Multi-tenant system design</li>
+        <li>Cloud infrastructure (AWS/RDS)</li>
+        <li>AI-assisted project workflows</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="section-head">
+    <h2>Contact</h2>
+  </div>
+  <p>Open to conversations about projects, opportunities, or just trading ideas. Reach out through any of these.</p>
+  <div class="contact-links">
+    <a href="mailto:your.email@example.com">Email <span class="arrow">your.email@example.com</span></a>
+    <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub <span class="arrow">@yourusername</span></a>
+    <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener">LinkedIn <span class="arrow">/in/yourusername</span></a>
+  </div>
+</section>
+
+<footer>
+  <span>Brian, Nairobi</span>
+  <span id="year"></span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
